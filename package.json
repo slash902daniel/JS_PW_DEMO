@@ -1,0 +1,28 @@
+{
+  "name": "js_pw_demo",
+  "version": "1.0.0",
+  "description": "DEMO FOR PLAYWRIGHT FRAMEWORK",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/slash902daniel/JS_PW_DEMO.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/slash902daniel/JS_PW_DEMO/issues"
+  },
+  "homepage": "https://github.com/slash902daniel/JS_PW_DEMO#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.54.1",
+    "@types/node": "^24.0.14",
+    "@axe-core/playwright": "^4.10.2",
+    "axe-html-reporter": "^2.2.11"
+  },
+  "dependencies": {
+
+  }
+}
