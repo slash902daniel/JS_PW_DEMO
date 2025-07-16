@@ -1,88 +1,104 @@
-import { test, expect } from '@playwright/test';
-import AxeBuilder from '@axe-core/playwright'; // 1
-import {createHtmlReport} from 'axe-html-reporter';
+import { test, expect } from "@playwright/test";
+import AxeBuilder from "@axe-core/playwright"; // For A11Y Scan
+import { createHtmlReport } from "axe-html-reporter"; //For Custom HTML Report
 
-const HTML_REPORT_PATH = './pw-report-a11y'
+const CUSTOM_HTML_REPORT_PATH = "./pw-report-a11y";
 
-test.describe('homepage', () => { // 2
-  test('should not have any automatically detectable accessibility issues', async ({ page }) => {
-    await page.goto('https://your-site.com/'); // 3
+test.describe("A11Y - Examples focus on Scan Configuration", () => {
+  test("1. should demo a scan configuration - with Tags", async ({ page }) => {
+    await page.goto("https://your-site.com/");
 
-    const accessibilityScanResults = await new AxeBuilder({ page }).analyze(); // 4
+    //Simple scan, (Define the wcag versions to use with the SCAN)
+    const accessibilityScanResults = await new AxeBuilder({ page })
+      .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
+      .analyze();
 
-    createHtmlReport({
-      results: accessibilityScanResults,
-      options: {
-        outputDir: HTML_REPORT_PATH,
-        reportFileName: 'mytest1.html',
-      }
-    })
-
-    expect(accessibilityScanResults.violations).toEqual([]); // 5
+    //Assertion
+    expect(accessibilityScanResults.violations).toEqual([]);
   });
 });
 
-/* test('navigation menu should not have automatically detectable accessibility violations', async ({
-  page,
-}) => {
-  await page.goto('https://your-site.com/');
+test.describe("A11Y - Examples focus on Scan Approach and Scope: General Scan / Atomic Scan / Include / Exclude", () => {
+  test("1. should demo a simple scan - for full page", async ({ page }) => {
+    await page.goto("https://your-site.com/");
 
-  await page.getByRole('button', { name: 'Navigation Menu' }).click();
+    //Simple scan, (To the full page, nothing excluded)
+    const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
 
-  // It is important to waitFor() the page to be in the desired
-  // state *before* running analyze(). Otherwise, axe might not
-  // find all the elements your test expects it to scan.
-  await page.locator('#navigation-menu-flyout').waitFor();
+    //Assertion
+    expect(accessibilityScanResults.violations).toEqual([]);
+  });
 
-  const accessibilityScanResults = await new AxeBuilder({ page })
-      .include('#navigation-menu-flyout')
+  test("2. should demo a simple scan - for a particular element (Atomic)", async ({
+    page,
+  }) => {
+    await page.goto("https://your-site.com/");
+
+    await page.getByRole("button", { name: "Navigation Menu" }).click();
+
+    // It is important to waitFor() the page to be in the desired
+    // state *before* running analyze(). Otherwise, axe might not
+    // find all the elements your test expects it to scan.
+    await page.locator("#navigation-menu-flyout").waitFor();
+
+    //Simple scan, (To a particular element)
+    const accessibilityScanResults = await new AxeBuilder({ page })
+      .include("#navigation-menu-flyout")
       .analyze();
+
+    //Assertion
+    expect(accessibilityScanResults.violations).toEqual([]);
+  });
+
+  test("3. should demo a simple scan - avoid known issues / common elements", async ({
+    page,
+  }) => {
+    await page.goto("https://your-site.com/page-with-known-issues");
+
+    //Simple scan, (exclude elements with known issues / elements that are common in all pages, to avoid duplicated findings)
+    const accessibilityScanResults = await new AxeBuilder({ page })
+      .exclude("#element-with-known-issue")
+      .exclude("#common-header")
+      .analyze();
+
+    //Assertion
+    expect(accessibilityScanResults.violations).toEqual([]);
+  });
+});
+
+test.describe("A11Y - Examples focus on Custom HTML Report", () => {
+  test("1. should scan for A11Y vulnerability and results wil lbe logged to the default PW Report", async ({
+    page,
+  }) => {
+    await page.goto("https://your-site.com/");
+    const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
+
+    /*     createHtmlReport({
+      results: accessibilityScanResults,
+      options: {
+        outputDir: HTML_REPORT_PATH,
+        reportFileName: "mytest1.html",
+      },
+    }); */
+
+    expect(accessibilityScanResults.violations).toEqual([]);
+  });
+
+  test("2. should scan for A11Y vulnerability and results will be logged to custom HTML Report", async ({
+    page,
+  }) => {
+    await page.goto("https://your-site.com/");
+
+    const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
 
     createHtmlReport({
       results: accessibilityScanResults,
       options: {
-        outputDir: HTML_REPORT_PATH,
-        reportFileName: 'mytest2.html',
-      }
-    })
-      
-  expect(accessibilityScanResults.violations).toEqual([]);
-}); */
+        outputDir: CUSTOM_HTML_REPORT_PATH,
+        reportFileName: "mytest1.html",
+      },
+    });
 
-test('should not have any automatically detectable WCAG A or AA violations', async ({ page }) => {
-  await page.goto('https://your-site.com/');
-
-  const accessibilityScanResults = await new AxeBuilder({ page })
-      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
-      .analyze();
-
-  createHtmlReport({
-      results: accessibilityScanResults,
-      options: {
-        outputDir: HTML_REPORT_PATH,
-        reportFileName: 'mytest3.html',
-      }
-    })
-
-  expect(accessibilityScanResults.violations).toEqual([]);
-});
-
-test('should not have any accessibility violations outside of elements with known issues', async ({
-  page,
-}) => {
-  await page.goto('https://your-site.com/page-with-known-issues');
-
-  const accessibilityScanResults = await new AxeBuilder({ page })
-      .exclude('#element-with-known-issue')
-      .analyze();
-
-          createHtmlReport({
-      results: accessibilityScanResults,
-      options: {
-        outputDir: HTML_REPORT_PATH,
-        reportFileName: 'mytest4.html',
-      }
-    })
-
-  expect(accessibilityScanResults.violations).toEqual([]);
+    expect(accessibilityScanResults.violations).toEqual([]);
+  });
 });
