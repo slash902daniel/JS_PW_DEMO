@@ -12,6 +12,9 @@ Simple Demo project to show the capabilities for this framework and it´s capabi
 |-----------------------|------------------------------------------------|
 |`playwright.config.ts` | Basic parameters/configuration for the project |
 
+## FT's - Functional Test
+Standard UI testing, for this demo we are NOT focusing on the POM/Support, as thefocus is to show the execution/assertions
+
 ## A11Y - Accesibility Test
 Uses `axe-core/playwright` for accesibility Scan
 Approach for scan, can be: Full Page / Atomic, also we can especify elements to add/remove (Like Elements with known issues or common elements)
