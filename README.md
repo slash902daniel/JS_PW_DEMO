@@ -5,7 +5,7 @@ Simple Demo project to show the capabilities for this framework and it´s capabi
 - Functional Tests (FT´s)<br/>
 - A11Y (Accesibility)<br/>
 - Visual Compare<br/>
-- API Mocking    --> TODO<br/>
+- API Mocking<br/>
 
 ## Configuration Files
 | COFIG FILE NAME       | ABOUT                                          |
@@ -37,4 +37,4 @@ Focus on Get image and compare vs saved ones, depends on the actual host executo
 | FT´s                        | npx playwright test           | ./playwright-report                      |
 | A11Y - Accesibility Test    | npx playwright test           | ./playwright-report and ./pw-report-a11y |
 | Visual Compare              | npx playwright test           | ./playwright-report                      |
-
+| Mock APIs                   | npx playwright test           | ./playwright-report                      |
