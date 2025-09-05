@@ -4,7 +4,7 @@
 Simple Demo project to show the capabilities for this framework and it´s capabilities:<br/>
 - Functional Tests (FT´s)<br/>
 - A11Y (Accesibility)<br/>
-- Visual Compare --> TODO<br/>
+- Visual Compare<br/>
 - API Mocking    --> TODO<br/>
 
 ## Configuration Files
@@ -21,8 +21,14 @@ Approach for scan, can be: Full Page / Atomic.<br/>
 Also we can especify elements to add/remove (Like Elements with known issues or common elements).<br/>
 HTML Custom Rerpots are generated in addition to the standard PW Reports, this to enhance the understanding of the findings.
 
+## Visual Comparison Test
+Focus on Get image and compare vs saved ones, depends on the actual host executor to take the new image.
+
+
 ## References
 - [Playwright Documentation] (https://playwright.dev/docs/intro)
+- [Playwright - Image Compare] (https://playwright.dev/docs/test-snapshots)
+- [Playwright - API Mocks] (https://playwright.dev/docs/mock-browser-apis)
 - [axe-core/playwright] (https://github.com/axe-core/axe-playwright)
 
 ## How to Execute:
@@ -30,4 +36,5 @@ HTML Custom Rerpots are generated in addition to the standard PW Reports, this t
 |-----------------------------|-------------------------------|------------------------------------------|
 | FT´s                        | npx playwright test           | ./playwright-report                      |
 | A11Y - Accesibility Test    | npx playwright test           | ./playwright-report and ./pw-report-a11y |
+| Visual Compare              | npx playwright test           | ./playwright-report                      |
 

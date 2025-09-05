@@ -17,12 +17,10 @@
   },
   "homepage": "https://github.com/slash902daniel/JS_PW_DEMO#readme",
   "devDependencies": {
+    "@axe-core/playwright": "^4.10.2",
     "@playwright/test": "^1.54.1",
     "@types/node": "^24.0.14",
-    "@axe-core/playwright": "^4.10.2",
-    "axe-html-reporter": "^2.2.11"
-  },
-  "dependencies": {
-
+    "axe-html-reporter": "^2.2.11",
+    "dotenv": "^17.2.2"
   }
 }

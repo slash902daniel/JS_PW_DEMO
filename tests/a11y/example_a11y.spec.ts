@@ -86,18 +86,25 @@ test.describe("A11Y - Examples focus on Custom HTML Report", () => {
 
   test("2. should scan for A11Y vulnerability and results will be logged to custom HTML Report", async ({
     page,
-  }) => {
+  }, testinfo) => {
     await page.goto("https://your-site.com/");
 
     const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
+    const uniqueNameForReport = 'mytest1.html'
 
     createHtmlReport({
       results: accessibilityScanResults,
       options: {
         outputDir: CUSTOM_HTML_REPORT_PATH,
-        reportFileName: "mytest1.html",
+        reportFileName: uniqueNameForReport,
       },
     });
+
+    //To export as attachement in the PW report (For easy copy/paste)
+    await testinfo.attach(uniqueNameForReport, {
+      body: JSON.stringify(accessibilityScanResults.violations, null, 2),
+      contentType: 'application/json',
+    })
 
     expect(accessibilityScanResults.violations).toEqual([]);
   });
